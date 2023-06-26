@@ -5,20 +5,20 @@ contract TaskManager {
   struct Task {
     string name;
     string description;
-    uint hour;
+    uint256 hour;
     bool approved;
     bool declined;
   }
 
-  mapping(uint => Task) public tasks;
-  uint public taskCount;
+  mapping(uint256 => Task) public tasks;
+  uint256 public taskCount;
 
-  event TaskAdded(uint taskId, string name, string description, uint hour);
-  event TaskApproved(uint taskId);
-  event TaskDeclined(uint taskId);
+  event TaskAdded(uint256 taskId, string name, string description, uint256 hour);
+  event TaskApproved(uint256 taskId);
+  event TaskDeclined(uint256 taskId);
 
-  function addTask(string memory _name, string memory _description, uint _hour) external {
-    uint taskId = taskCount;
+  function addTask(string memory _name, string memory _description, uint256 _hour) external {
+    uint256 taskId = taskCount;
     Task storage newTask = tasks[taskId];
     newTask.name = _name;
     newTask.description = _description;
@@ -31,7 +31,7 @@ contract TaskManager {
     emit TaskAdded(taskId, _name, _description, _hour);
   }
 
-  function approveTask(uint _taskId) external {
+  function approveTask(uint256 _taskId) external {
     Task storage task = tasks[_taskId];
     require(!task.approved && !task.declined, 'Task already approved or declined');
 
@@ -39,7 +39,7 @@ contract TaskManager {
     emit TaskApproved(_taskId);
   }
 
-  function declineTask(uint _taskId) external {
+  function declineTask(uint256 _taskId) external {
     Task storage task = tasks[_taskId];
     require(!task.approved && !task.declined, 'Task already approved or declined');
 

@@ -22,8 +22,8 @@ class App extends Component {
       if (window.ethereum) {
         const web3 = new Web3(window.ethereum);
         await window.ethereum.enable();
-        const accounts = await web3.eth.getAccounts();
-        const contractAddress = '0x84eA74d481Ee0A5332c457a4d796187F6Ba67fEB'; // Replace with your contract address
+        const accounts = await web3.eth.requestAccounts();
+        const contractAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512'; // Replace with your contract address
         const contractABI = [
           {
             "anonymous": false,
@@ -200,6 +200,7 @@ class App extends Component {
   loadTasks = async () => {
     const { contract } = this.state;
     const taskCount = await contract.methods.taskCount().call();
+    console.log(taskCount);
     const tasks = [];
 
     for (let i = 0; i < taskCount; i++) {
@@ -218,7 +219,7 @@ class App extends Component {
 
       await contract.methods.addTask(taskName, description, hour).send({ from: account });
 
-      console.log('Task added successfully!');
+      //console.log(hour);
 
       // Clear input fields
       this.setState({ taskName: '', description: '', hour: '' });
@@ -280,7 +281,7 @@ class App extends Component {
         <div className="card-body">
           <h5 className="card-title">Task Name: {task.name}</h5>
           <p className="card-text">Description: {task.description}</p>
-          <p className="card-text">Hours: {task.hour}</p>
+          <p className="card-text">Hours: {task.hour.toString()}</p>
           {!task.approved && !task.declined && (
             <>
               <button className="btn btn-success" onClick={() => this.approveTask(index)}>
