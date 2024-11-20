@@ -5,12 +5,12 @@ async function main() {
 
   console.log("Deploying contracts with the account:", deployer.address);
 
-  const TaskManager = await hre.ethers.getContractFactory("TaskManager");
-  const taskManager = await TaskManager.deploy();
+  const DynamicNft = await hre.ethers.getContractFactory("DynamicNFT");
+  const DynamicNFT = await DynamicNft.deploy();
 
-  await taskManager.deployed();
+  await DynamicNFT.deployed();
 
-  console.log("TaskManager deployed to:", taskManager.address);
+  console.log("NFT deployed to:", DynamicNFT.address);
 }
 
 main()
